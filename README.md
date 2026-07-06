@@ -1,6 +1,6 @@
 # Subgraph Algorithmus C++ Implementierung
 
-Vollständige C++17-Implementierung des Subgraph-Vergleichsalgorithmus nach **Epp (2026)** mit 100% Code Coverage und automatisiertem Test-Report.
+Vollständige C++17-Implementierung des Subgraph Algorithmus von **Stephan Epp (2026)**.
 
 ## Projektstruktur
 
@@ -8,106 +8,54 @@ Vollständige C++17-Implementierung des Subgraph-Vergleichsalgorithmus nach **Ep
 .
 ├── SubgraphAlgorithm.h          # Header-Datei mit Klasse-Definition
 ├── SubgraphAlgorithm.cpp        # Implementierung (ca. 200 Zeilen)
-├── SubgraphTest.cpp             # 47 Unit Tests mit Google Test
+├── SubgraphTest.cpp             # Unit Tests mit Google Test
 ├── CMakeLists.txt               # Build-Konfiguration
-├── setup_and_run.ps1            # PowerShell-Automatisierungsskript
-└── README.md                     # Diese Datei
+└── README.md                    # Diese Datei
 ```
 
-## Schnellstart (Windows mit PowerShell)
+## Build
 
-### Voraussetzungen
-
-1. **Visual Studio 2022** oder **Build Tools for Visual Studio 2022**
-   - Installiere C++ Workload
-   - Include CMake support
-
-2. **CMake** (≥ 3.10)
-   ```powershell
-   choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-   ```
-
-3. **PowerShell** (≥ 5.0)
-   - Sollte auf Windows 10/11 installiert sein
-   - Prüfe Version: `$PSVersionTable.PSVersion`
-
-4. **(Optional) OpenCppCoverage** für detaillierte Coverage-Reports
-   ```powershell
-   choco install opencppcoverage
-   ```
-
-### Schritt 1: PowerShell-Ausführungsrichtlinie
-
-Öffne PowerShell **als Administrator** und führe aus:
-
+### 1. MinGW & CMake zum PATH hinzufügen (falls noch nicht)
 ```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+$env:Path += ";C:\Users\...\Downloads\cmake-4.4.0-rc3-windows-x86_64\bin"
+$env:Path += ";C:\Users\...\Downloads\mingw64\bin"
 ```
 
-### Schritt 2: Script ausführen
-
-Navigiere zum Projektverzeichnis und starte das Automatisierungsskript:
-
-```powershell
-cd C:\pfad\zum\Projekt
-.\setup_and_run.ps1
-```
-
-Das Script führt automatisch aus:
-- CMake-Konfiguration
-- C++ Kompilierung mit MSVC
-- 47 Unit Tests
-- Code Coverage Analyse
-- HTML Report Generierung
-
-### Schritt 3: HTML Report anschauen
-
-Der Report wird unter `coverage_report\coverage_report.html` generiert und kann mit jedem Browser geöffnet werden.
-
-## Manuelle Verwendung (ohne Script)
-
-Falls das Script nicht läuft, folge diesen Schritten:
-
-### 1. Build-Verzeichnis erstellen
+### 2. Build-Verzeichnis erstellen
 
 ```powershell
 mkdir build
 cd build
 ```
 
-### 2. CMake konfigurieren
+### 3. CMake konfigurieren
 
 ```powershell
-cmake -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Debug ..
+cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
 ```
 
-### 3. Kompilieren
+### 4. Kompilieren
 
 ```powershell
-cmake --build . --config Debug
-```
-
-### 4. Tests ausführen
-
-```powershell
-.\Debug\subgraph_tests.exe
-```
-
-Erwartetes Output:
-```
-[==========] Running 47 tests from 8 test suites.
-...
-[==========] 47 tests from 8 test suites ran. (XXX ms total)
-[  PASSED  ] 47 tests.
+cmake --build . --config Release
 ```
 
 ## Test-Abdeckung
 
-### Test-Statistiken
-- **Gesamt Tests:** 47
-- **Bestandene Tests:** 47 ✓
-- **Fehlerquote:** 0%
-- **Code Coverage:** ≥ 97%
+### Tests ausführen
+
+```
+# MinGW bin-Verzeichnis zum PATH hinzufügen
+$env:Path = "C:\Users\...\Downloads\mingw64\bin;$env:Path"
+
+# Verifiziere, dass die DLLs da sind
+ls C:\Users\...\Downloads\mingw64\bin\libgcc*.dll
+ls C:\Users\...\Downloads\mingw64\bin\libstdc++*.dll
+
+# Jetzt wieder testen
+cd C:\Users\...\Git\csubgraph\build
+.\subgraph_tests.exe
+```
 
 ## Getestete Funktionen
 
@@ -210,8 +158,8 @@ int main() {
 ## Algorithmus-Details
 
 ### Komplexität
-- **Zeitkomplexität:** O(n³)
-- **Speicherkomplexität:** O(n²)
+- **Zeitkomplexität:** O(n^3)
+- **Speicherkomplexität:** O(n^2)
 
 ### Korrektheit
 Der Algorithmus nutzt:
@@ -221,22 +169,6 @@ Der Algorithmus nutzt:
 
 ### Optimalität
 Unter SETH (Strong Exponential Time Hypothesis) ist der Algorithmus asymptotisch optimal.
-
-## Verzeichnis nach Ausführung
-
-```
-project/
-├── build/                    # CMake Build-Verzeichnis
-│   ├── Debug/
-│   │   └── subgraph_tests.exe
-│   ├── CMakeFiles/
-│   └── ...
-├── coverage/                 # Coverage-Dateien
-│   ├── test_output.txt
-│   └── coverage.xml (optional)
-└── coverage_report/
-    └── coverage_report.html  # HTML-Report
-```
 
 ## Fehlerbehandlung
 
@@ -258,12 +190,12 @@ try {
 ## Wissenschaftlicher Hintergrund
 
 Der Algorithmus ist basiert auf:
-- **Epp, S. (2026)**: "The Subgraph Algorithm"
+- **Epp, S. (2026)**: "Der Subgraph Algorithmus"
 - **Signatur-Basis**: Injektive Spaltengewichtung
 - **Rotations-Basis**: Zyklische Ordnung-Erhaltung
 - **Subgraph-Kriterium**: LCS ≥ 2
 
-Siehe `subgraph.tex` für vollständige formale Herleitung.
+Siehe `subgraph.tex` in meinem Repository https://github.com/hjstephan86/subgraph für die vollständige formale Herleitung.
 
 ## Erweiterungsmöglichkeiten
 
@@ -272,25 +204,3 @@ Siehe `subgraph.tex` für vollständige formale Herleitung.
 3. **Gewichtete Graphen**: Kantengewichte in Signaturen
 4. **Gerichtete Graphen**: Bereits unterstützt
 5. **Approximative Algorithmen**: Für große Graphen
-
-## Debugging in VS Code
-
-### launch.json
-```json
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "(Windows) Starten",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/Debug/subgraph_tests.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false
-        }
-    ]
-}
-```

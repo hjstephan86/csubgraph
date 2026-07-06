@@ -1,7 +1,9 @@
-#pragma once
+#ifndef SUBGRAPH_ALGORITHM_H
+#define SUBGRAPH_ALGORITHM_H
 
 #include <vector>
 #include <cstdint>
+#include <string>
 #include <algorithm>
 #include <numeric>
 
@@ -90,7 +92,7 @@ public:
      * @param name Name der Matrix (für Fehlermeldungen)
      * @return true wenn Matrix gültig, sonst false
      */
-    static bool isValidAdjacencyMatrix(const std::vector<std::vector<int>>& matrix, const std::string& name = "Matrix");
+    static bool isValidAdjacencyMatrix(const std::vector<std::vector<int>>& matrix);
 
     /**
      * @brief Gibt das Ergebnis als String aus
@@ -100,3 +102,5 @@ public:
      */
     static std::string resultToString(Result result);
 };
+
+#endif  // SUBGRAPH_ALGORITHM_H

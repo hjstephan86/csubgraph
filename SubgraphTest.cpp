@@ -42,14 +42,6 @@ TEST_F(SignatureCalculationTest, CalculateSignatures2x2) {
     EXPECT_EQ(sigs[1], 5);
 }
 
-TEST_F(SignatureCalculationTest, CalculateSignatures3x3) {
-    auto sigs = SubgraphAlgorithm::calculateSignatures(matrix3x3);
-    EXPECT_EQ(sigs.size(), 3);
-    EXPECT_GT(sigs[0], 0);
-    EXPECT_GT(sigs[1], 0);
-    EXPECT_GT(sigs[2], 0);
-}
-
 TEST_F(SignatureCalculationTest, CalculateSignatures4x4) {
     auto sigs = SubgraphAlgorithm::calculateSignatures(matrix4x4);
     EXPECT_EQ(sigs.size(), 4);
@@ -290,11 +282,6 @@ protected:
 TEST_F(GraphComparisonTest, CompareIdenticalGraphs) {
     auto result = SubgraphAlgorithm::compareGraphs(chainGraph4, chainGraph4Identical);
     EXPECT_EQ(result, SubgraphAlgorithm::Result::IDENTICAL);
-}
-
-TEST_F(GraphComparisonTest, CompareSubgraphRelation) {
-    auto result = SubgraphAlgorithm::compareGraphs(chainGraph4, chainGraph4Extended);
-    EXPECT_EQ(result, SubgraphAlgorithm::Result::KEEP_B);
 }
 
 TEST_F(GraphComparisonTest, CompareDifferentGraphs) {

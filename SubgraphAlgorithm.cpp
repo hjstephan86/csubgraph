@@ -4,7 +4,7 @@
 #include <limits>
 
 std::vector<uint64_t> SubgraphAlgorithm::calculateSignatures(const std::vector<std::vector<int>>& matrix) {
-    if (!isValidAdjacencyMatrix(matrix, "Matrix for signature calculation")) {
+    if (!isValidAdjacencyMatrix(matrix)) {
         throw std::invalid_argument("Invalid adjacency matrix for signature calculation");
     }
 
@@ -59,13 +59,19 @@ std::vector<uint64_t> SubgraphAlgorithm::rotateSequence(const std::vector<uint64
     }
 
     size_t n = seq.size();
-    rotation = rotation % n;  // Normalisiere auf [0, n)
+    rotation = rotation % n;
 
     std::vector<uint64_t> rotated;
     rotated.reserve(n);
 
+    // FALSCH (nach links):
+    // for (size_t i = 0; i < n; ++i) {
+    //     rotated.push_back(seq[(i + rotation) % n]);
+    // }
+
+    // RICHTIG (nach rechts):
     for (size_t i = 0; i < n; ++i) {
-        rotated.push_back(seq[(i + rotation) % n]);
+        rotated.push_back(seq[(i + n - rotation) % n]);
     }
 
     return rotated;
@@ -85,7 +91,7 @@ std::vector<uint64_t> SubgraphAlgorithm::extractRowComponents(const std::vector<
     return rowComponents;
 }
 
-bool SubgraphAlgorithm::isValidAdjacencyMatrix(const std::vector<std::vector<int>>& matrix, const std::string& name) {
+bool SubgraphAlgorithm::isValidAdjacencyMatrix(const std::vector<std::vector<int>>& matrix) {
     // Prüfe ob Matrix leer ist
     if (matrix.empty()) {
         return false;
@@ -132,10 +138,10 @@ SubgraphAlgorithm::Result SubgraphAlgorithm::compareGraphs(
     const std::vector<std::vector<int>>& graphB) {
 
     // Validiere beide Graphen
-    if (!isValidAdjacencyMatrix(graphA, "Graph A")) {
+    if (!isValidAdjacencyMatrix(graphA)) {
         throw std::invalid_argument("Graph A is not a valid adjacency matrix");
     }
-    if (!isValidAdjacencyMatrix(graphB, "Graph B")) {
+    if (!isValidAdjacencyMatrix(graphB)) {
         throw std::invalid_argument("Graph B is not a valid adjacency matrix");
     }
 
