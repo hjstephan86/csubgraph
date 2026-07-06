@@ -1,8 +1,8 @@
-# 🧬 Subgraph-Algorithmus C++ Implementierung
+# Subgraph Algorithmus C++ Implementierung
 
 Vollständige C++17-Implementierung des Subgraph-Vergleichsalgorithmus nach **Epp (2026)** mit 100% Code Coverage und automatisiertem Test-Report.
 
-## 📋 Projektstruktur
+## Projektstruktur
 
 ```
 .
@@ -14,7 +14,7 @@ Vollständige C++17-Implementierung des Subgraph-Vergleichsalgorithmus nach **Ep
 └── README.md                     # Diese Datei
 ```
 
-## 🚀 Schnellstart (Windows mit PowerShell)
+## Schnellstart (Windows mit PowerShell)
 
 ### Voraussetzungen
 
@@ -54,17 +54,17 @@ cd C:\pfad\zum\Projekt
 ```
 
 Das Script führt automatisch aus:
-- ✓ CMake-Konfiguration
-- ✓ C++ Kompilierung mit MSVC
-- ✓ 47 Unit Tests
-- ✓ Code Coverage Analyse
-- ✓ HTML Report Generierung
+- CMake-Konfiguration
+- C++ Kompilierung mit MSVC
+- 47 Unit Tests
+- Code Coverage Analyse
+- HTML Report Generierung
 
 ### Schritt 3: HTML Report anschauen
 
 Der Report wird unter `coverage_report\coverage_report.html` generiert und kann mit jedem Browser geöffnet werden.
 
-## 🔧 Manuelle Verwendung (ohne Script)
+## Manuelle Verwendung (ohne Script)
 
 Falls das Script nicht läuft, folge diesen Schritten:
 
@@ -101,7 +101,7 @@ Erwartetes Output:
 [  PASSED  ] 47 tests.
 ```
 
-## 📊 Test-Abdeckung
+## Test-Abdeckung
 
 ### Test-Statistiken
 - **Gesamt Tests:** 47
@@ -109,20 +109,7 @@ Erwartetes Output:
 - **Fehlerquote:** 0%
 - **Code Coverage:** ≥ 97%
 
-### Test-Suites
-
-| Suite | Tests | Status |
-|-------|-------|--------|
-| SignatureCalculationTest | 6 | ✓ |
-| LCSTest | 7 | ✓ |
-| RotationTest | 6 | ✓ |
-| RowComponentsTest | 3 | ✓ |
-| MatrixValidationTest | 5 | ✓ |
-| GraphComparisonTest | 11 | ✓ |
-| ResultStringTest | 4 | ✓ |
-| EdgeCasesTest | 5 | ✓ |
-
-## 🎯 Getestete Funktionen
+## Getestete Funktionen
 
 ### `calculateSignatures()`
 ```cpp
@@ -133,9 +120,9 @@ std::vector<uint64_t> SubgraphAlgorithm::calculateSignatures(
 Berechnet eindeutige Signaturen: σ_j = Σ(A_ij * 2^i) + j * 2^n
 
 **Tests:**
-- ✓ 2x2, 3x3, 4x4 Matrizen
-- ✓ Injektivität (alle Signaturen unterschiedlich)
-- ✓ Fehlgeschlagene Eingaben (leere, ungültige Matrizen)
+- 2x2, 3x3, 4x4 Matrizen
+- Injektivität (alle Signaturen unterschiedlich)
+- Fehlgeschlagene Eingaben (leere, ungültige Matrizen)
 
 ### `computeLCS()`
 ```cpp
@@ -147,9 +134,9 @@ size_t SubgraphAlgorithm::computeLCS(
 Berechnet längste gemeinsame Teilsequenz mittels dynamischer Programmierung.
 
 **Tests:**
-- ✓ Identische, teils gemeinsame, disjunkte Sequenzen
-- ✓ Edge Cases (leere Sequenzen)
-- ✓ Große Werte (uint64_t)
+- Identische, teils gemeinsame, disjunkte Sequenzen
+- Edge Cases (leere Sequenzen)
+- Große Werte (uint64_t)
 
 ### `rotateSequence()`
 ```cpp
@@ -161,10 +148,10 @@ std::vector<uint64_t> SubgraphAlgorithm::rotateSequence(
 Zyklische Rechtsrotation einer Sequenz.
 
 **Tests:**
-- ✓ Rotation 0, 1, full, modulo
-- ✓ Leere und Single-Element-Sequenzen
+- Rotation 0, 1, full, modulo
+- Leere und Single-Element-Sequenzen
 
-### `compareGraphs()` ⭐
+### `compareGraphs()`
 ```cpp
 Result SubgraphAlgorithm::compareGraphs(
     const std::vector<std::vector<int>>& graphA,
@@ -180,12 +167,12 @@ Vergleicht zwei Graphen und bestimmt Subgraph-Beziehung.
 - `IDENTICAL` - Graphen sind identisch
 
 **Tests:**
-- ✓ Identische Graphen
-- ✓ Subgraph-Beziehungen
-- ✓ Verschiedene Größen
-- ✓ Validierung (leere, ungültige Matrizen)
+- Identische Graphen
+- Subgraph-Beziehungen
+- Verschiedene Größen
+- Validierung (leere, ungültige Matrizen)
 
-## 💡 Beispiel-Verwendung
+## Beispiel-Verwendung
 
 ```cpp
 #include "SubgraphAlgorithm.h"
@@ -220,7 +207,7 @@ int main() {
 }
 ```
 
-## 🔍 Algorithmus-Details
+## Algorithmus-Details
 
 ### Komplexität
 - **Zeitkomplexität:** O(n³)
@@ -235,7 +222,7 @@ Der Algorithmus nutzt:
 ### Optimalität
 Unter SETH (Strong Exponential Time Hypothesis) ist der Algorithmus asymptotisch optimal.
 
-## 📁 Verzeichnis nach Ausführung
+## Verzeichnis nach Ausführung
 
 ```
 project/
@@ -248,10 +235,10 @@ project/
 │   ├── test_output.txt
 │   └── coverage.xml (optional)
 └── coverage_report/
-    └── coverage_report.html  # HTML-Report ⭐
+    └── coverage_report.html  # HTML-Report
 ```
 
-## 🐛 Fehlerbehandlung
+## Fehlerbehandlung
 
 Der Code wirft `std::invalid_argument` Exception für:
 - Leere Matrizen
@@ -268,7 +255,7 @@ try {
 }
 ```
 
-## 🎓 Wissenschaftlicher Hintergrund
+## Wissenschaftlicher Hintergrund
 
 Der Algorithmus ist basiert auf:
 - **Epp, S. (2026)**: "The Subgraph Algorithm"
@@ -278,7 +265,7 @@ Der Algorithmus ist basiert auf:
 
 Siehe `subgraph.tex` für vollständige formale Herleitung.
 
-## ✨ Erweiterungsmöglichkeiten
+## Erweiterungsmöglichkeiten
 
 1. **Sparse Graphs**: Adjazenzlisten statt Matrizen
 2. **Parallelisierung**: Rotation-Vergleiche parallel
@@ -286,7 +273,7 @@ Siehe `subgraph.tex` für vollständige formale Herleitung.
 4. **Gerichtete Graphen**: Bereits unterstützt
 5. **Approximative Algorithmen**: Für große Graphen
 
-## 🛠️ Debugging in VS Code
+## Debugging in VS Code
 
 ### launch.json
 ```json
@@ -307,22 +294,3 @@ Siehe `subgraph.tex` für vollständige formale Herleitung.
     ]
 }
 ```
-
-## 📝 Lizenz & Autor
-
-- **Author**: Stephan Epp
-- **Datum**: 2026
-- **Status**: Produktionsreif
-- **Code Coverage**: ≥ 97%
-- **Alle Tests**: ✓ BESTANDEN
-
-## 🤝 Support
-
-Für Fragen oder Probleme:
-1. Prüfe die `subgraph.tex` für Algorithmus-Details
-2. Lese die Test-Suite für Verwendungsbeispiele
-3. Überprüfe die Exception-Messages
-
----
-
-**Happy Graph Comparing! 🚀**

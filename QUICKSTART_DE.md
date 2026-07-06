@@ -119,7 +119,7 @@ Sollte ausgeben:
 
 ### Was testet der Code?
 
-Der **Subgraph-Algorithmus** vergleicht zwei Graphen:
+Der **Subgraph Algorithmus** vergleicht zwei Graphen:
 - **Graph** = Netzwerk aus Knoten und Kanten
 - **Adjazenzmatrix** = Tabelle von 0 und 1
 - **Subgraph** = Ein Graph ist "in" einem anderen enthalten
