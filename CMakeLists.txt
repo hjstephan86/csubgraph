@@ -13,12 +13,12 @@ else()
 endif()
 
 # Hauptbibliothek
-add_library(subgraph_lib
+add_library(subgraphlib
     SubgraphAlgorithm.cpp
     SubgraphAlgorithm.h
 )
 
-target_include_directories(subgraph_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(subgraphlib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Google Test einbinden
 include(FetchContent)
@@ -31,22 +31,22 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # Test-Executable
-add_executable(subgraph_tests SubgraphTest.cpp)
-target_link_libraries(subgraph_tests PRIVATE subgraph_lib gtest gtest_main)
+add_executable(subgraph-tests SubgraphTest.cpp)
+target_link_libraries(subgraph-tests PRIVATE subgraphlib gtest gtest_main)
 
 # Code Coverage aktivieren
 if(MSVC)
     # Visual Studio / OpenCppCoverage
-    target_compile_options(subgraph_tests PRIVATE /Zi)
-    target_link_options(subgraph_tests PRIVATE /DEBUG)
+    target_compile_options(subgraph-tests PRIVATE /Zi)
+    target_link_options(subgraph-tests PRIVATE /DEBUG)
 else()
     # GCC / Clang mit gcov
-    target_compile_options(subgraph_lib PRIVATE --coverage)
-    target_link_libraries(subgraph_lib PRIVATE --coverage)
-    target_compile_options(subgraph_tests PRIVATE --coverage)
-    target_link_libraries(subgraph_tests PRIVATE --coverage)
+    target_compile_options(subgraphlib PRIVATE --coverage)
+    target_link_libraries(subgraphlib PRIVATE --coverage)
+    target_compile_options(subgraph-tests PRIVATE --coverage)
+    target_link_libraries(subgraph-tests PRIVATE --coverage)
 endif()
 
 # Test-Ziel
 enable_testing()
-add_test(NAME SubgraphTests COMMAND subgraph_tests)
+add_test(NAME SubgraphTests COMMAND subgraph-tests)

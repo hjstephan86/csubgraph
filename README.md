@@ -1,6 +1,6 @@
 # Subgraph Algorithmus C++ Implementierung
 
-Vollständige C++17-Implementierung des Subgraph Algorithmus von **Stephan Epp (2026)**.
+Vollständige C++ 17-Implementierung des Subgraph Algorithmus von **Stephan Epp (2026)**.
 
 ## Projektstruktur
 
@@ -54,7 +54,7 @@ ls C:\Users\...\Downloads\mingw64\bin\libstdc++*.dll
 
 # Jetzt wieder testen
 cd C:\Users\...\Git\csubgraph\build
-.\subgraph_tests.exe
+.\subgraph-tests.exe
 ```
 
 ## Getestete Funktionen

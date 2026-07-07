@@ -1,3 +1,3 @@
 .vscode/
 build/*
-!build/libsubgraph_lib.a
+!build/libsubgraphlib.a
