@@ -31,7 +31,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # Test-Executable
-add_executable(subgraph-tests SubgraphTest.cpp)
+add_executable(subgraph-tests tests/TestSubgraphAlgorithm.cpp)
 target_link_libraries(subgraph-tests PRIVATE subgraphlib gtest gtest_main)
 
 # Code Coverage aktivieren
