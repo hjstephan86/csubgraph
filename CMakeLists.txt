@@ -20,8 +20,14 @@ add_library(subgraphlib
 
 target_include_directories(subgraphlib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-# Google Test einbinden
+# FetchContent für externe Dependencies
 include(FetchContent)
+
+# nlohmann/json einbinden (für CLI JSON I/O)
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
+FetchContent_MakeAvailable(json)
+
+# Google Test einbinden
 FetchContent_Declare(
     googletest
     URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
@@ -29,6 +35,10 @@ FetchContent_Declare(
 
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
+
+# CLI-Executable für JSON-basierte Subgraph-Vergleiche
+add_executable(subgraph-cli cli.cpp)
+target_link_libraries(subgraph-cli PRIVATE subgraphlib nlohmann_json::nlohmann_json)
 
 # Test-Executable
 add_executable(subgraph-tests tests/TestSubgraphAlgorithm.cpp)
