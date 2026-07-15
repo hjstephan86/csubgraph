@@ -37,7 +37,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # CLI-Executable für JSON-basierte Subgraph-Vergleiche
-add_executable(subgraph-cli cli.cpp)
+add_executable(subgraph-cli Cli.cpp)
 target_link_libraries(subgraph-cli PRIVATE subgraphlib nlohmann_json::nlohmann_json)
 
 # Test-Executable

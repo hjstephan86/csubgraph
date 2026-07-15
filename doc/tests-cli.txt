@@ -1,0 +1,67 @@
+PS C:\Users\Internet\Git\csubgraph\build> .\subgraph-cli.exe
+{"graph_a":[[0,1],[1,0]],"graph_b":[[0,1],[1,0]]}
+{"error":null,"result":"IDENTICAL","result_code":3}
+PS C:\Users\Internet\Git\csubgraph\build> $json = '{"graph_a":[[0,1,1,0,0],[1,0,1,1,0],[1,1,0,1,1],[0,1,1,0,1],[0,0,1,1,0]],"graph_b":[[0,1,1,0,0],[1,0,1,1,0],[1,1,0,1,1],[0,1,1,0,1],[0,0,1,1,0]]}'
+PS C:\Users\Internet\Git\csubgraph\build>
+PS C:\Users\Internet\Git\csubgraph\build> $json | .\subgraph-cli.exe
+{"error":null,"result":"IDENTICAL","result_code":3}
+PS C:\Users\Internet\Git\csubgraph\build> $json = '{"graph_a":[[0,1,1,0,0],[1,0,1,1,0],[1,1,0,1,1],[0,1,1,0,1],[0,0,1,1,0]],"graph_b":[[0,1,1],[1,0,1],[1,1,0]]}'
+PS C:\Users\Internet\Git\csubgraph\build> $json | .\subgraph-cli.exe
+{"error":null,"result":"KEEP_BOTH","result_code":2}
+PS C:\Users\Internet\Git\csubgraph\build> $json = '{"graph_a":[[0,1,0,0],[1,0,1,0],[0,1,0,1],[0,0,1,0]],"graph_b":[[0,0,1],[0,0,0],[1,0,0]]}'
+PS C:\Users\Internet\Git\csubgraph\build> $json | .\subgraph-cli.exe
+{"error":null,"result":"KEEP_BOTH","result_code":2}
+PS C:\Users\Internet\Git\csubgraph\build> $json = @{
+>>     graph_a = @(
+>>         @(0,1,1,0,1,0,0,0,0,1),
+>>         @(1,0,1,1,0,1,0,0,0,0),
+>>         @(1,1,0,1,0,0,1,0,0,0),
+>>         @(0,1,1,0,1,1,0,1,0,0),
+>>         @(1,0,0,1,0,1,1,0,1,0),
+>>         @(0,1,0,1,1,0,1,1,0,1),
+>>         @(0,0,1,0,1,1,0,1,1,0),
+>>         @(0,0,0,1,0,1,1,0,1,1),
+>>         @(0,0,0,0,1,0,1,1,0,1),
+>>         @(1,0,0,0,0,1,0,1,1,0)
+>>     )
+>>     graph_b = @(
+>>         @(0,1,0,1),
+>>         @(1,0,1,1),
+>>         @(0,1,0,1),
+>>         @(1,1,1,0)
+>>     )
+>> } | ConvertTo-Json -Compress
+PS C:\Users\Internet\Git\csubgraph\build> $json | .\subgraph-cli.exe
+{"error":null,"result":"KEEP_BOTH","result_code":2}
+PS C:\Users\Internet\Git\csubgraph\build> $tests = @(
+>>     # Test 1: Identisch
+>>     '{"graph_a":[[0,1],[1,0]],"graph_b":[[0,1],[1,0]]}',
+>>
+>>     # Test 2: Identisch (größer)
+>>     '{"graph_a":[[0,1,1],[1,0,1],[1,1,0]],"graph_b":[[0,1,1],[1,0,1],[1,1,0]]}',
+>>
+>>     # Test 3: Subgraph
+>>     '{"graph_a":[[0,1,1,0],[1,0,1,1],[1,1,0,1],[0,1,1,0]],"graph_b":[[0,1],[1,0]]}',
+>>
+>>     # Test 4: Unterschiedlich
+>>     '{"graph_a":[[0,1,0],[1,0,1],[0,1,0]],"graph_b":[[0,0,1],[0,0,1],[1,1,0]]}'
+>> )
+PS C:\Users\Internet\Git\csubgraph\build>
+PS C:\Users\Internet\Git\csubgraph\build> foreach ($i in 0..$($tests.Length-1)) {
+>>     Write-Host "Test $($i+1):" -ForegroundColor Green
+>>     $tests[$i] | .\subgraph-cli.exe
+>>     Write-Host ""
+>> }
+Test 1:
+{"error":null,"result":"IDENTICAL","result_code":3}
+
+Test 2:
+{"error":null,"result":"IDENTICAL","result_code":3}
+
+Test 3:
+{"error":null,"result":"KEEP_BOTH","result_code":2}
+
+Test 4:
+{"error":null,"result":"KEEP_BOTH","result_code":2}
+
+PS C:\Users\Internet\Git\csubgraph\build>
