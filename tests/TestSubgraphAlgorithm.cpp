@@ -433,6 +433,110 @@ TEST_F(EdgeCasesTest, RotationSequenceLarge) {
     EXPECT_EQ(rotated.size(), 100);
 }
 
+
+// ============================================================================
+// Test: Echte Subgraph-Beziehungen (NEU)
+// ============================================================================
+
+class SubgraphRelationshipTest : public ::testing::Test {};
+
+TEST_F(SubgraphRelationshipTest, Subgraph5x5to3x3) {
+    std::vector<std::vector<int>> large{
+        {0, 1, 1, 0, 0},
+        {1, 0, 1, 1, 0},
+        {1, 1, 0, 1, 1},
+        {0, 1, 1, 0, 1},
+        {0, 0, 1, 1, 0}
+    };
+    
+    std::vector<std::vector<int>> small{
+        {0, 1, 1},
+        {1, 0, 1},
+        {1, 1, 0}
+    };
+    
+    auto result = SubgraphAlgorithm::compareGraphs(large, small);
+    EXPECT_EQ(result, SubgraphAlgorithm::Result::KEEP_B);
+}
+
+TEST_F(SubgraphRelationshipTest, ChainGraphSubgraph) {
+    std::vector<std::vector<int>> chain5{
+        {0, 1, 0, 0, 0},
+        {0, 0, 1, 0, 0},
+        {0, 0, 0, 1, 0},
+        {0, 0, 0, 0, 1},
+        {0, 0, 0, 0, 0}
+    };
+    
+    std::vector<std::vector<int>> chain3{
+        {0, 1, 0},
+        {0, 0, 1},
+        {0, 0, 0}
+    };
+    
+    auto result = SubgraphAlgorithm::compareGraphs(chain5, chain3);
+    EXPECT_EQ(result, SubgraphAlgorithm::Result::KEEP_B);
+}
+
+TEST_F(SubgraphRelationshipTest, TriangleInLargerGraph) {
+    std::vector<std::vector<int>> largeTriangle{
+        {0, 1, 1, 0, 0},
+        {1, 0, 1, 0, 0},
+        {1, 1, 0, 0, 0},
+        {0, 0, 0, 0, 1},
+        {0, 0, 0, 1, 0}
+    };
+    
+    std::vector<std::vector<int>> triangle{
+        {0, 1, 1},
+        {1, 0, 1},
+        {1, 1, 0}
+    };
+    
+    auto result = SubgraphAlgorithm::compareGraphs(largeTriangle, triangle);
+    EXPECT_EQ(result, SubgraphAlgorithm::Result::KEEP_B);
+}
+
+TEST_F(SubgraphRelationshipTest, NoSubgraphRelationship) {
+    std::vector<std::vector<int>> star{
+        {0, 1, 1, 1},
+        {1, 0, 0, 0},
+        {1, 0, 0, 0},
+        {1, 0, 0, 0}
+    };
+    
+    std::vector<std::vector<int>> line{
+        {0, 1, 0},
+        {0, 0, 1},
+        {0, 0, 0}
+    };
+    
+    auto result = SubgraphAlgorithm::compareGraphs(star, line);
+    EXPECT_EQ(result, SubgraphAlgorithm::Result::KEEP_BOTH);
+}
+
+TEST_F(SubgraphRelationshipTest, ComplexSubgraph6to4Nodes) {
+    std::vector<std::vector<int>> graph6{
+        {0, 1, 1, 0, 1, 0},
+        {1, 0, 1, 1, 0, 1},
+        {1, 1, 0, 1, 0, 0},
+        {0, 1, 1, 0, 1, 1},
+        {1, 0, 0, 1, 0, 1},
+        {0, 1, 0, 1, 1, 0}
+    };
+    
+    std::vector<std::vector<int>> graph4{
+        {0, 1, 1, 0},
+        {1, 0, 1, 1},
+        {1, 1, 0, 1},
+        {0, 1, 1, 0}
+    };
+    
+    auto result = SubgraphAlgorithm::compareGraphs(graph6, graph4);
+    EXPECT_EQ(result, SubgraphAlgorithm::Result::KEEP_B);
+}
+
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

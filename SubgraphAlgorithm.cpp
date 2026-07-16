@@ -37,20 +37,26 @@ size_t SubgraphAlgorithm::computeLCS(const std::vector<uint64_t>& seqA, const st
     size_t m = seqA.size();
     size_t n = seqB.size();
 
-    // DP-Tabelle für LCS
+    // DP-Tabelle für Longest Common SUBSTRING (nicht Subsequence!)
+    // Wichtig: Bei Mismatch RESET auf 0, nicht max() wie bei LCS Subsequence!
     std::vector<std::vector<size_t>> dp(m + 1, std::vector<size_t>(n + 1, 0));
+    size_t maxLength = 0;
 
     for (size_t i = 1; i <= m; ++i) {
         for (size_t j = 1; j <= n; ++j) {
             if (seqA[i - 1] == seqB[j - 1]) {
+                // Match: Verlängere die zusammenhängende Teilsequenz
                 dp[i][j] = dp[i - 1][j - 1] + 1;
+                maxLength = std::max(maxLength, dp[i][j]);
             } else {
-                dp[i][j] = std::max(dp[i - 1][j], dp[i][j - 1]);
+                // MISMATCH: RESET auf 0 (nicht max!)
+                // Dies macht es zum Longest Common SUBSTRING-Algorithmus
+                dp[i][j] = 0;
             }
         }
     }
 
-    return dp[m][n];
+    return maxLength;
 }
 
 std::vector<uint64_t> SubgraphAlgorithm::rotateSequence(const std::vector<uint64_t>& seq, size_t rotation) {
@@ -170,7 +176,7 @@ SubgraphAlgorithm::Result SubgraphAlgorithm::compareGraphs(
         for (size_t rotation = 0; rotation < nB; ++rotation) {
             std::vector<uint64_t> rotatedB = rotateSequence(rowCompB, rotation);
             size_t lcs = computeLCS(rowCompA, rotatedB);
-            if (lcs >= 2) {
+            if (lcs >= 2) {  // Schwelle: mindestens 2 übereinstimmende Signaturen
                 isSubgraphAinB = true;
                 break;
             }
@@ -182,7 +188,7 @@ SubgraphAlgorithm::Result SubgraphAlgorithm::compareGraphs(
         for (size_t rotation = 0; rotation < nA; ++rotation) {
             std::vector<uint64_t> rotatedA = rotateSequence(rowCompA, rotation);
             size_t lcs = computeLCS(rotatedA, rowCompB);
-            if (lcs >= 2) {
+            if (lcs >= 2) {  // Schwelle: mindestens 2 übereinstimmende Signaturen
                 isSubgraphBinA = true;
                 break;
             }
